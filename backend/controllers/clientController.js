@@ -7,12 +7,14 @@ const Client = require('../models/Client')
 exports.getAll = async (req, res) => {
     try {
         const user = await Client.find((error, result) => {
-            if (error) throw error
+            if (error) {
+                return res.status(400).json({ msg: "Error with database" })
+            }
 
             if (result) {
                 return res.status(200).json(result)
             } else {
-                return res.status(400).json({ msg: "Client not found" })
+                return res.status(400).json({ msg: "Clients not found" })
             }
         })
     } catch (err) {
@@ -24,12 +26,10 @@ exports.getAll = async (req, res) => {
 exports.getOne = async (req, res) => {
 
     let id = sanitize(req.body.id)
-    console.log(`ovo je prosledjen id ${id}`)
 
     try {
         const user = await Client.findOne({ "_id": id }, (error, result) => {
             if (error) {
-                // console.error(error)
                 return res.status(404).json({ msg: "Client not found" })
             } else if (result) {
                 return res.status(200).json(result)
@@ -42,53 +42,70 @@ exports.getOne = async (req, res) => {
 
 //Add one clinet
 exports.addOne = async (req, res) => {
-    const pass = sanitize(req.body.password)
+    const { firstName, lastName, username, password, password2, idNumber } = sanitize(req.body)
 
-    bcrypt.genSalt(10, (err, salt) => {
-        if (err) {
-            return res.status(400).json({ msg: "Mistake in creating salt" })
-        } else {
-            bcrypt.hash(pass, salt, (err, hash) => {
-                if (err) {
-                    return res.status(400).json({ msg: "Mistake in creating hash" })
-                } else {
-                    const client = new Client({
-                        firstName: sanitize(req.body.firstName),
-                        lastName: sanitize(req.body.lastName),
-                        username: sanitize(req.body.username),
-                        password: hash,
-                        idNumber: sanitize(req.body.idNumber)
-                    })
-
-                    try {
-                        client.save((error, result) => {
-                            if (result) {
-                                return res.status(201).json({ msg: "Client added" })
-                            } else {
-                                return res.status(400).json({ msg: 'Client not added', err: error })
-                            }
-                        })
-                    } catch (err) {
-                        throw err
-                    }
-                }
-            });
+    //Check if client exist
+    Client.findOne({ 'username': username }, (error, result) => {
+        if (error) {
+            return res.status(400).json({ msg: "Problem with database", error: error, res: result })
         }
 
-    });
+        //If exist
+        if (result) {
+            return res.status(200).json({ msg: "Client is already registred" })
+        }
 
+        //If not registred check pass match
+        if (password !== password2) {
+            return res.status(200).json({ msg: "Passwords do not match" })
+        }
 
+        //If not already registred and pass matches, create new
+        bcrypt.genSalt(10, (err, salt) => {
+            if (err) {
+                return res.status(400).json({ msg: "Mistake in creating salt", err: err })
+            }
 
+            bcrypt.hash(password, salt, async (err, hash) => {
+                if (err) {
+                    return res.status(400).json({ msg: "Mistake in creating hash" })
+                }
+
+                const client = new Client({
+                    firstName,
+                    lastName,
+                    username,
+                    password: hash,
+                    idNumber
+                })
+
+                try {
+                    await client.save((error, result) => {
+                        if (error) {
+                            return res.status(400).json({ msg: 'Client not added', error: error })
+                        }
+
+                        return res.status(201).json({ msg: result })
+                    })
+                } catch (err) {
+                    throw err
+                }
+            });
+        });
+    })
 }
 
 //Update one clinet
 exports.updateOne = async (req, res) => {
+
+    const { firstName, lastName, username, password, idNumber } = sanitize(req.body)
+
     const client = {
-        firstName: sanitize(req.body.firstName),
-        lastName: sanitize(req.body.lastName),
-        username: sanitize(req.body.username),
-        password: sanitize(req.body.password),
-        idNumber: sanitize(req.body.idNumber)
+        firstName: firstName,
+        lastName: lastName,
+        username: username,
+        password: password,
+        idNumber: idNumber
     }
 
     const id = sanitize(req.query.id)
@@ -112,7 +129,7 @@ exports.deleteOne = async (req, res) => {
     const id = sanitize(req.body.id)
 
     try {
-        Client.deleteOne({ "_id": id }, (error, result) => {
+        await Client.deleteOne({ "_id": id }, (error, result) => {
             if (error) {
                 return res.status(404).json({ msg: "Client not found" })
             } else if (result) {
@@ -127,28 +144,36 @@ exports.deleteOne = async (req, res) => {
 
 //Login client
 exports.login = async (req, res) => {
-    const username = sanitize(req.body.username)
-    const pass = sanitize(req.body.password)
+    const { username, password } = sanitize(req.body)
 
     try {
-        //Check doses user exist
+        //Check if user exist
         const client = await Client.findOne({ 'username': username }, (error, result) => {
             if (error) {
                 return res.status(404).json({ msg: "Client not foudn" })
-            } else if (result) {
-                //Check does pass matches
-                bcrypt.compare(pass, result.password, function (err, res) {
-                    if (err) {
-                        return res.status(400).json({ msg: "Error in comparing pass" })
-                    } else if (res) {
-                        return res.send(result)
-                    }
-                });
             }
+
+            bcrypt.compare(password, result.password, async (error, isMatch) => {
+                if (error) {
+                    return res.status(400).json({ msg: "Problem with bcrypt" })
+                }
+
+                if (isMatch) {
+                    await Client.find({ username: username, password: password }, (error, result) => {
+                        if (error) {
+                            return res.status(400).json({ msg: "Problem with mogooe" })
+                        }
+
+                        if (result) {
+                            return res.status(200).json({ msg: "Logedin" })
+                        }
+                    })
+                } else {
+                    return res.status(200).json({ msg: "Pasword incorect" })
+                }
+            })
         })
     } catch (err) {
         console.error(err)
     }
-
-    bcrypt.compare()
 }
