@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 import { Client } from 'src/app/models/Client.model';
 import { UserService } from '../../services/user.service';
@@ -14,7 +15,15 @@ export class DashboardComponent implements OnInit {
   clients: Client[] = [];
   id: string;
 
-  constructor(private userService: UserService, private router: Router) { }
+  addFormClient: FormGroup;
+
+  constructor(private userService: UserService, private router: Router, private fb: FormBuilder) {
+    this.addFormClient = this.fb.group({
+      firstName: [],
+      lastName: [],
+      idNumber: []
+    });
+  }
 
   ngOnInit(): void {
   }

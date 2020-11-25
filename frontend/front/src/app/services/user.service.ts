@@ -9,7 +9,7 @@ import { Client } from '../models/Client.model';
 export class UserService {
 
   url = 'http://localhost:3000/api/client';
-  client = new Client();
+  client: Client;
 
   constructor(private http: HttpClient) { }
 

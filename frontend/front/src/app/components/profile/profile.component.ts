@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
-import { Client } from 'src/app/models/Client.model';
 import { UserService } from 'src/app/services/user.service';
 import { Car } from 'src/app/models/Car.model';
 import { Intervention } from 'src/app/models/Intervention.model';
@@ -16,7 +15,6 @@ import { CarService } from 'src/app/services/car.service';
 })
 export class ProfileComponent implements OnInit {
 
-  client = new Client();
   cars: Car[] = [];
   interventions = new Intervention();
 
@@ -32,13 +30,27 @@ export class ProfileComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private fb: FormBuilder) {
 
-    this.activatedRoute.params.subscribe(res => this.clientId = res.id);
-
     this.updateFormClient = this.fb.group({
-      id: [this.clientId],
+      id: [],
       firstName: [],
       lastName: [],
       idNumber: []
+    });
+
+    this.activatedRoute.params.subscribe((res) => {
+      this.clientId = res.id;
+
+      this.userService.getOneClient(this.clientId).subscribe(result => {
+        // this.client.id = this.clientId;
+        // this.client.firstName = result.firstName;
+        // this.client.lastName = result.lastName;
+        // this.client.idNumber = result.idNumber;
+
+        this.updateFormClient.get('id').patchValue(this.clientId);
+        this.updateFormClient.get('firstName').patchValue(result.firstName);
+        this.updateFormClient.get('lastName').patchValue(result.lastName);
+        this.updateFormClient.get('idNumber').patchValue(result.idNumber);
+      });
     });
 
     this.updateFormCar = this.fb.group({
@@ -58,12 +70,6 @@ export class ProfileComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.userService.getOneClient(this.clientId).subscribe(res => {
-      this.client.firstName = res.firstName;
-      this.client.lastName = res.lastName;
-      this.client.idNumber = res.idNumber;
-    });
-
     this.carService.getCarsByOwner(this.clientId).subscribe(res => this.cars = res);
   }
 
