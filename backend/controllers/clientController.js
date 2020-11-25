@@ -40,12 +40,34 @@ exports.getOne = async (req, res) => {
     }
 }
 
+//Returns clients - by name
+exports.getClientsByName = async (req, res) => {
+
+    let firstName = sanitize(req.body.firstName)
+
+    try {
+        const user = await Client.find({ "firstName": firstName }, (error, result) => {
+            if (error) {
+                return res.status(404).json({ msg: "Client not found" })
+            } else if (result) {
+                return res.status(200).json(result)
+            }
+        })
+    } catch (err) {
+        console.error(err)
+    }
+}
+
 //Add one clinet
 exports.addOne = async (req, res) => {
-    const { firstName, lastName, username, password, password2, idNumber } = sanitize(req.body)
+    const { firstName, lastName, idNumber } = sanitize(req.body)
+
+    if (!firstName || !lastName || !idNumber) {
+        return res.status(200).json({ msg: "Fill all fields" })
+    }
 
     //Check if client exist
-    Client.findOne({ 'username': username }, (error, result) => {
+    Client.findOne({ 'idNumber': idNumber }, async (error, result) => {
         if (error) {
             return res.status(400).json({ msg: "Problem with database", error: error, res: result })
         }
@@ -55,60 +77,42 @@ exports.addOne = async (req, res) => {
             return res.status(200).json({ msg: "Client is already registred" })
         }
 
-        //If not registred check pass match
-        if (password !== password2) {
-            return res.status(200).json({ msg: "Passwords do not match" })
+        const client = new Client({
+            firstName: firstName,
+            lastName: lastName,
+            idNumber: idNumber
+        })
+
+        try {
+            await client.save((error, result) => {
+                if (error) {
+                    return res.status(400).json({ msg: 'Client not added', error: error })
+                }
+
+                return res.status(201).json({ msg: result })
+            })
+        } catch (err) {
+            throw err
         }
-
-        //If not already registred and pass matches, create new
-        bcrypt.genSalt(10, (err, salt) => {
-            if (err) {
-                return res.status(400).json({ msg: "Mistake in creating salt", err: err })
-            }
-
-            bcrypt.hash(password, salt, async (err, hash) => {
-                if (err) {
-                    return res.status(400).json({ msg: "Mistake in creating hash" })
-                }
-
-                const client = new Client({
-                    firstName,
-                    lastName,
-                    username,
-                    password: hash,
-                    idNumber
-                })
-
-                try {
-                    await client.save((error, result) => {
-                        if (error) {
-                            return res.status(400).json({ msg: 'Client not added', error: error })
-                        }
-
-                        return res.status(201).json({ msg: result })
-                    })
-                } catch (err) {
-                    throw err
-                }
-            });
-        });
     })
 }
 
 //Update one clinet
 exports.updateOne = async (req, res) => {
 
-    const { firstName, lastName, username, password, idNumber } = sanitize(req.body)
+    const { firstName, lastName, idNumber, id } = sanitize(req.body)
+
+    if (!firstName || !lastName || !idNumber) {
+        return res.status(200).json({ msg: "Fill all fields" })
+    }
 
     const client = {
         firstName: firstName,
         lastName: lastName,
-        username: username,
-        password: password,
         idNumber: idNumber
     }
 
-    const id = sanitize(req.query.id)
+    // const id = sanitize(req.query.id)
 
     try {
         const update = await Client.findOneAndUpdate({ "_id": id }, client, (error, result) => {
@@ -150,7 +154,7 @@ exports.login = async (req, res) => {
         //Check if user exist
         const client = await Client.findOne({ 'username': username }, (error, result) => {
             if (error) {
-                return res.status(404).json({ msg: "Client not foudn" })
+                return res.status(404).json({ msg: "Client not found" })
             }
 
             bcrypt.compare(password, result.password, async (error, isMatch) => {

@@ -5,6 +5,8 @@ const bodyParser = require('body-parser')
 
 const connectDB = require('./config/db')
 const clientRoutes = require('./routes/clientRoutes')
+const carRoutes = require('./routes/carRoutes')
+const interventionRoutes = require('./routes/interventionRoutes')
 
 //Load custom config
 dotenv.config({ path: './config/config.env' })
@@ -28,7 +30,7 @@ app.use((req, res, next) => {
     );
     res.setHeader(
         "Access-Control-Allow-Methods",
-        "GET, POST, PUT, DELETE, PATCH, OPTIONS"
+        "GET, POST, PUT, DELETE"
     );
     next();
 });
@@ -38,6 +40,8 @@ app.use(express.static(path.join(__dirname, 'assets')))
 
 //Routes
 app.use('/api/client', clientRoutes)
+app.use('/api/car', carRoutes)
+app.use('/api/intervention', interventionRoutes)
 
 //Run server
 const PORT = process.env.PORT || 3000
