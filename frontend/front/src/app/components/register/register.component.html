@@ -1,0 +1,61 @@
+<div class="ml-4 mt-5 pt-5 pl-5 col-sm-10">
+    <div class="card shadow">
+        <div class="card-body">
+            <form [formGroup]="registerForm" (submit)="onRegisterSubmit()">
+                <fieldset>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <legend class="pb-4">Dodaj novog klijenta</legend>
+                            <div class="form-group">
+                                <label for="firstname">Ime</label>
+                                <input type="text" class="form-control" formControlName="firstname">
+                            </div>
+                            <div class="form-group">
+                                <label for="lastname">Prezime</label>
+                                <input type="text" class="form-control" formControlName="lastname">
+                            </div>
+                            <div class="form-group">
+                                <label for="idNumber">Broj licne karte</label>
+                                <input type="text" class="form-control" formControlName="idNumber">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <legend class="pb-4">Dodaj auto klijenta</legend>
+                                <div class="form-group">
+                                    <label for="carManufac">Marka</label>
+                                    <input type="text" class="form-control" formControlName="carManufac">
+                                </div>
+                                <div class="form-group">
+                                    <label for="carModel">Model</label>
+                                    <input type="text" class="form-control" formControlName="carModel">
+                                </div>
+                                <div class="form-group">
+                                    <label for="carManuYear">Godina proizvodnje</label>
+                                    <input type="text" class="form-control" formControlName="carManuYear">
+                                </div>
+                                <div class="form-group">
+                                    <label for="carRegNumber">Registracija</label>
+                                    <input type="text" class="form-control" formControlName="carRegNumber">
+                                </div>
+                                <div class="form-group">
+                                    <label for="carEngNumber">Broj motora</label>
+                                    <input type="text" class="form-control" formControlName="carEngNumber">
+                                </div>
+                                <div class="form-group">
+                                    <label for="carChaNumber">Broj sasije</label>
+                                    <input type="text" class="form-control" formControlName="carChaNumber">
+                                </div>
+                                <div class="form-group">
+                                    <label for="carDescription">Opis</label>
+                                    <input type="text" class="form-control" formControlName="carChaNumber">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary shadow mt-4">Dodaj</button>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>

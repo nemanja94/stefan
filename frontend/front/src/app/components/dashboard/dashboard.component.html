@@ -1,0 +1,75 @@
+<div class="container mt-5 pt-5">
+    <div class="row">
+        <div class="col-sm-12 p-3">
+            <div class="card shadow">
+                <div class="card-body">
+                    <h5 class="card-title">Pretrazi klijente</h5>
+                    <p class="card-text">Ova komponente sluzi za pretragu klijenata.</p>
+                    <form class="form-inline">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <input #firstname class="form-control m-2 shadow" type="search"
+                                    placeholder="Ime klijenta" aria-label="Search">
+                            </div>
+                            <!-- <div class="col-sm-4">
+                                <input class="form-control m-2 shadow" type="search" placeholder="Intervencija"
+                                    aria-label="Search">
+                            </div>
+                            <div class="col-sm-4">
+                                <input class="form-control m-2 shadow" type="date" placeholder="Datum intervencije"
+                                    aria-label="Search">
+                            </div> -->
+                        </div>
+                        <button class="btn btn-warning shadow my-2 my-sm-0" type="submit"
+                            (click)="findClientsByName(firstname.value)">Pretrazi</button>
+                    </form>
+                    <div class="container rounded m-0">
+                        <table class="table table-striped mt-5 border shadow rounded table-hover text-dark text-center">
+                            <thead class="bg-warning text-dark">
+                                <tr>
+                                    <th scope="col">Ime</th>
+                                    <th scope="col">Prezime</th>
+                                    <th scope="col">Broj licne karte</th>
+                                    <th scope="col">Opcije</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let client of clients">
+                                    <td>{{client.firstName}}</td>
+                                    <td>{{client.lastName}}</td>
+                                    <td>{{client.idNumber}}</td>
+                                    <td><button class="btn btn-success mx-2"
+                                            (click)="editClient(client._id)">Profile</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 p-3">
+            <div class="card shadow">
+                <div class="card-body">
+                    <h5 class="card-title">Dodaj intervenciju</h5>
+                    <p class="card-text">Ova komponenta sluzi za kreiranje nove intervencija na vozilu.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 p-2">
+            <div class="card shadow">
+                <div class="card-body">
+                    <h5 class="card-title">Dodaj klijenta</h5>
+                    <p class="card-text">Ova komponenta slizi za kreiranje novog klijenta.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 p-2">
+            <div class="card shadow">
+                <div class="card-body">
+                    <h5 class="card-title">Dodaj vozilo</h5>
+                    <p class="card-text">Ova komponenta sluzi za dodavanje novog vozila.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
