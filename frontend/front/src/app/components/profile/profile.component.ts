@@ -41,11 +41,6 @@ export class ProfileComponent implements OnInit {
       this.clientId = res.id;
 
       this.userService.getOneClient(this.clientId).subscribe(result => {
-        // this.client.id = this.clientId;
-        // this.client.firstName = result.firstName;
-        // this.client.lastName = result.lastName;
-        // this.client.idNumber = result.idNumber;
-
         this.updateFormClient.get('id').patchValue(this.clientId);
         this.updateFormClient.get('firstName').patchValue(result.firstName);
         this.updateFormClient.get('lastName').patchValue(result.lastName);
