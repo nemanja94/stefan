@@ -6,6 +6,7 @@ import { UserService } from 'src/app/services/user.service';
 import { Car } from 'src/app/models/Car.model';
 import { Intervention } from 'src/app/models/Intervention.model';
 import { CarService } from 'src/app/services/car.service';
+import { InterventionService } from 'src/app/services/intervention.service';
 
 
 @Component({
@@ -16,6 +17,8 @@ import { CarService } from 'src/app/services/car.service';
 export class ProfileComponent implements OnInit {
 
   cars: Car[] = [];
+  numberOfCars = 0;
+  carId: number;
   interventions = new Intervention();
 
   updateFormClient: FormGroup;
@@ -27,6 +30,7 @@ export class ProfileComponent implements OnInit {
   constructor(
     private userService: UserService,
     private carService: CarService,
+    private interventionService: InterventionService,
     private activatedRoute: ActivatedRoute,
     private fb: FormBuilder) {
 
@@ -65,7 +69,10 @@ export class ProfileComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.carService.getCarsByOwner(this.clientId).subscribe(res => this.cars = res);
+    this.carService.getCarsByOwner(this.clientId).subscribe(res => {
+      this.cars = res;
+
+    });
   }
 
   onUpdateClient(): void {

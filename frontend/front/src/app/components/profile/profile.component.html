@@ -1,79 +1,84 @@
-<div class="container">
+<div class="container col-sm-9 mt-5">
     <fieldset class="border rounded p-4 m-4">
-        <legend class="text-center">Vozila klijenta</legend>
-        <table class="table table-striped mt-4 border shadow table-hover text-dark text-center table-responsive">
-            <thead class="bg-warning text-dark">
-                <tr>
-                    <th scope="col">Proizvodjac</th>
-                    <th scope="col">Model</th>
-                    <th scope="col">Godina priozvodnje</th>
-                    <th scope="col">Broj registracije</th>
-                    <th scope="col">Broj motora</th>
-                    <th scope="col">Broj sasije</th>
-                    <th scope="col">Opis</th>
-                    <th scope="col">Opcije</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let car of cars">
-                    <td>{{car.maker}}</td>
-                    <td>{{car.model}}</td>
-                    <td>{{car.manufactYear}}</td>
-                    <td>{{car.regNumber}}</td>
-                    <td>{{car.engineNumber}}</td>
-                    <td>{{car.chasiesNumber}}</td>
-                    <td>{{car.description}}</td>
-                    <td><button class="btn btn-success mx-2" (click)="onUpdateCar()">Profile</button></td>
-                </tr>
-            </tbody>
-        </table>
-    </fieldset>
-    <div class="row">
-        <div class="col-lg-6">
-            <form [formGroup]="updateFormClient" (submit)="onUpdateClient()" class="form-group">
-                <fieldset class="border rounded p-4 m-4">
-                    <legend class="text-center">Azuriraj klijenta</legend>
-                    <div class="form-group">
+        <legend class="text-left">Profil klijenta</legend>
+        <form [formGroup]="updateFormClient" (submit)="onUpdateClient()" class="form-group pb-3 pt-5">
+            <fieldset class="border rounded p-4 m-4">
+                <legend class="text-center">Azuriraj klijenta</legend>
+                <div class="form-row">
+                    <div class="col">
                         <label for="firstName">Ime</label>
                         <input type="text" class="form-control" id="firstName" formControlName="firstName">
                     </div>
-                    <div class="form-group">
+                    <div class="col">
                         <label for="lastName">Prezime</label>
                         <input type="text" class="form-control" id="lastName" formControlName="lastName">
                     </div>
-                    <div class="form-group">
+                    <div class="col">
                         <label for="idNumber">Broj licne karte</label>
                         <input type="text" class="form-control" id="idNumber" formControlName="idNumber">
                     </div>
+                </div>
+                <div class="container text-right p-0">
+                    <input class="btn btn-success mt-3" type="submit" value="Azuriraj">
+                </div>
+            </fieldset>
+        </form>
+        <fieldset class="border rounded p-4 m-4">
+            <legend class="text-center">Vozila klijenta</legend>
+            <table class="table table-striped mt-4 border shadow table-hover text-dark text-center table-responsive">
+                <thead class="bg-warning text-dark">
+                    <tr>
+                        <th scope="col">Proizvodjac</th>
+                        <th scope="col">Model</th>
+                        <th scope="col">Godina priozvodnje</th>
+                        <th scope="col">Broj registracije</th>
+                        <th scope="col">Broj motora</th>
+                        <th scope="col">Broj sasije</th>
+                        <th scope="col">Opis</th>
+                        <th scope="col">Opcije</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let car of cars">
+                        <td>{{car.maker}}</td>
+                        <td>{{car.model}}</td>
+                        <td>{{car.manufactYear}}</td>
+                        <td>{{car.regNumber}}</td>
+                        <td>{{car.engineNumber}}</td>
+                        <td>{{car.chasiesNumber}}</td>
+                        <td>{{car.description}}</td>
+                        <td><button class="btn btn-success mx-2" (click)="onUpdateCar()">Profile</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </fieldset>
+        <div class="row">
+            <div *ngFor="" class="col-lg-6">
+                <fieldset class="border rounded p-4 m-4">
+                    <legend class="text-center">Intervencije</legend>
+                    <div class="card my-3">
+                        <div class="card-body">
+                            <h5 class="card-title">Pretrazi klijente</h5>
+                            <p class="card-text">Ova komponente sluzi za pretragu klijenata.</p>
+                        </div>
+                    </div>
+                    <div class="card my-3">
+                        <div class="card-body">
+                            <h5 class="card-title">Pretrazi klijente</h5>
+                            <p class="card-text">Ova komponente sluzi za pretragu klijenata.</p>
+                        </div>
+                    </div>
+                    <div class="card my-3">
+                        <div class="card-body">
+                            <h5 class="card-title">Pretrazi klijente</h5>
+                            <p class="card-text">Ova komponente sluzi za pretragu klijenata.</p>
+                        </div>
+                    </div>
                     <input class="btn btn-success" type="submit" value="Azuriraj">
                 </fieldset>
-            </form>
+            </div>
         </div>
-        <div class="col-lg-6">
-            <fieldset class="border rounded p-4 m-4">
-                <legend class="text-center">Intervencije</legend>
-                <div class="card my-3">
-                    <div class="card-body">
-                        <h5 class="card-title">Pretrazi klijente</h5>
-                        <p class="card-text">Ova komponente sluzi za pretragu klijenata.</p>
-                    </div>
-                </div>
-                <div class="card my-3">
-                    <div class="card-body">
-                        <h5 class="card-title">Pretrazi klijente</h5>
-                        <p class="card-text">Ova komponente sluzi za pretragu klijenata.</p>
-                    </div>
-                </div>
-                <div class="card my-3">
-                    <div class="card-body">
-                        <h5 class="card-title">Pretrazi klijente</h5>
-                        <p class="card-text">Ova komponente sluzi za pretragu klijenata.</p>
-                    </div>
-                </div>
-                <input class="btn btn-success" type="submit" value="Azuriraj">
-            </fieldset>
-        </div>
-    </div>
+    </fieldset>
 </div>
 
 <!-- <form [formGroup]="updateFormCar" (submit)="onUpdateCar()" class="form-group container">
