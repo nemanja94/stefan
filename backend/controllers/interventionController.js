@@ -41,14 +41,14 @@ exports.getOne = async (req, res) => {
 }
 
 //Returns interventons - by name
-exports.getInterventionsByName = async (req, res) => {
+exports.getInterventionsByCarId = async (req, res) => {
 
-    let intervention = sanitize(req.body.intervention)
+    let carId = sanitize(req.body.carId)
 
     try {
-        const intervention = await Intervention.find({ "intervention": intervention }, (error, result) => {
+        const interventions = await Intervention.find({ "carId": carId }, (error, result) => {
             if (error) {
-                return res.status(404).json({ msg: "Intervention not found" })
+                return res.status(404).json({ msg: "Interventions not found" })
             } else if (result) {
                 return res.status(200).json(result)
             }
