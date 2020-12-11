@@ -40,7 +40,7 @@ exports.getOne = async (req, res) => {
     }
 }
 
-//Returns interventons - by name
+//Returns interventons - by carId
 exports.getInterventionsByCarId = async (req, res) => {
 
     let carId = sanitize(req.body.carId)
