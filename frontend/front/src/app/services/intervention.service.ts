@@ -14,4 +14,8 @@ export class InterventionService {
   getCarsByOwner(clientID): Observable<any> {
     return this.http.post(`${this.url}/getCarsByOwner`, { clientID });
   }
+
+  getInterventionsByCarId(carId): Observable<any> {
+  	return this.http.post(`${this.url}/getInterventionsByCarId`, { carId: carId });
+  }
 }

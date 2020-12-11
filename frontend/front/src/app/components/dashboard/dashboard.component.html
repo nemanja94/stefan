@@ -23,7 +23,7 @@
                             (click)="findClientsByName(firstname.value)">Pretrazi</button>
                     </form>
                     <div class="container rounded m-0 mx-auto">
-                        <table class="table table-striped mt-5 border shadow rounded table-hover text-dark text-center">
+                        <table *ngIf="clients.length > 0" class="table table-striped mt-5 shadow rounded table-hover text-dark text-center">
                             <thead class="bg-warning text-dark">
                                 <tr>
                                     <th scope="col">Ime</th>

@@ -19,7 +19,7 @@ export class ProfileComponent implements OnInit {
   cars: Car[] = [];
   numberOfCars = 0;
   carId: number;
-  interventions = new Intervention();
+  interventions: Intervention[] = [];
 
   updateFormClient: FormGroup;
   updateFormCar: FormGroup;
@@ -69,10 +69,7 @@ export class ProfileComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.carService.getCarsByOwner(this.clientId).subscribe(res => {
-      this.cars = res;
-
-    });
+    this.carService.getCarsByOwner(this.clientId).subscribe(res => this.cars = res);
   }
 
   onUpdateClient(): void {
@@ -89,8 +86,16 @@ export class ProfileComponent implements OnInit {
 
   }
 
+  onDeleteCar() {
+
+  }
+
   onUpdateIntervention(): void {
 
+  }
+
+  getInterventionsByCarId(carId) {
+    this.interventionService.getInterventionsByCarId(carId).subscribe(res => this.interventions = res);
   }
 
 
