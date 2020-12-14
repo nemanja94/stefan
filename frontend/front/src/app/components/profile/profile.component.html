@@ -1,102 +1,90 @@
-<div class="container col-sm-9 mt-5">
-    <fieldset class="border rounded p-4 m-4">
-        <legend class="text-left">Profil klijenta</legend>
-        <form [formGroup]="updateFormClient" (submit)="onUpdateClient()" class="form-group pb-3">
-            <fieldset class="border rounded p-4 m-4">
-                <legend class="text-center">Azuriraj klijenta</legend>
-                <div class="form-row">
-                    <div class="col">
-                        <label for="firstName">Ime</label>
-                        <input type="text" class="form-control" id="firstName" formControlName="firstName">
-                    </div>
-                    <div class="col">
-                        <label for="lastName">Prezime</label>
-                        <input type="text" class="form-control" id="lastName" formControlName="lastName">
-                    </div>
-                    <div class="col">
-                        <label for="idNumber">Broj licne karte</label>
-                        <input type="text" class="form-control" id="idNumber" formControlName="idNumber">
-                    </div>
+<div class="container-fluid mx-auto col-sm-12 col-md-12 col-lg-10 col-xl-8 mt-5 px-0">
+    <form [formGroup]="updateFormClient" (submit)="onUpdateClient()" class="form-group pb-3">
+        <fieldset class="border rounded p-3 m-2">
+            <legend class="text-left">Azuriraj klijenta</legend>
+            <div class="form-row">
+                <div class="col">
+                    <label for="firstName">Ime</label>
+                    <input type="text" class="form-control" id="firstName" formControlName="firstName">
                 </div>
-                <div class="text-right p-0">
-                    <input class="btn btn-primary mt-3" type="submit" value="Azuriraj">
+                <div class="col">
+                    <label for="lastName">Prezime</label>
+                    <input type="text" class="form-control" id="lastName" formControlName="lastName">
                 </div>
-            </fieldset>
-        </form>
-        <div class="container table-responsive px-0">
-            <fieldset class="border rounded p-4 m-4">
-            <legend class="text-center">Vozila klijenta</legend>
-            <table *ngIf="cars.length > 0" class="table table-striped mt-4 shadow table-hover text-dark text-center table-responsive">
-                <thead class="bg-warning text-dark">
-                    <tr>
-                        <th scope="col">Proizvodjac</th>
-                        <th scope="col">Model</th>
-                        <th scope="col">Godina priozvodnje</th>
-                        <th scope="col">Broj registracije</th>
-                        <th scope="col">Broj motora</th>
-                        <th scope="col">Broj sasije</th>
-                        <th scope="col">Opis</th>
-                        <th scope="col" colspan="2">Opcije</th>
-                    </tr>
-                </thead>
-                <tbody class="text-dark">
-                    <tr *ngFor="let car of cars">
-                        <td>{{car.maker}}</td>
-                        <td>{{car.model}}</td>
-                        <td>{{car.manufactYear}}</td>
-                        <td>{{car.regNumber}}</td>
-                        <td>{{car.engineNumber}}</td>
-                        <td>{{car.chasNumber}}</td>
-                        <td>{{car.description}}</td>
-                        <td>
-                            <button class="btn btn-primary mx-1" (click)="onUpdateCar()">Izmeni</button>
-                        </td>
-                        <td>
-                            <button class="btn btn-danger mx-1" (click)="onDeleteCar()">Ukloni</button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+                <div class="col">
+                    <label for="idNumber">Br licne karte</label>
+                    <input type="text" class="form-control" id="idNumber" formControlName="idNumber">
+                </div>
+            </div>
+            <div class="text-right p-0">
+                <input class="btn btn-success mt-3" type="submit" value="Azuriraj">
+            </div>
         </fieldset>
-        </div>
-        <div class="row">
-            <div class="col-sm-12 text-center ">
-                <fieldset class="border rounded p-4 m-4 ">
-                    <legend class="text-center">Intervencije</legend>
-                    <select class="container col-sm-4 rounded bg-warning p-2 text-dark font-weight-bold"
-                        (change)="getInterventionsByCarId($event.target.value)">
-                        <option></option>
-                        <option *ngFor="let car of cars" class="bg-warning text-dark font-weight-bold" value="{{car._id}}">{{car.maker}} {{car.model}} {{car.regNumber}}</option>
-                    </select>
-                    <div class="container col-sm-9 text-center">
-                        <table *ngIf="interventions.length > 0" class="table table-striped mt-4 shadow table-hover text-dark col-sm-12 col-lg-12 text-center table-responsive mx-auto px-0">
-                            <thead class="bg-warning text-dark">
-                                <tr>
-                                    <th scope="col">Intervencija</th>
-                                    <th scope="col">Opis</th>
-                                    <th scope="col">Cena</th>
-                                    <th scope="col">Datum</th>
-                                    <th scope="col" colspan="2">Opcije</th>
-                                </tr>
-                            </thead>
-                            <tbody class="text-dark">
-                                <tr *ngFor="let intervention of interventions">
-                                    <td>{{intervention.intervention}}</td>
-                                    <td>{{intervention.description}}</td>
-                                    <td>{{intervention.price}}</td>
-                                    <td>{{intervention.createdAt | date}}</td>
-                                    <td>
-                                        <button class="btn btn-primary mx-1" (click)="onUpdateCar()">Izmeni</button>
-                                    </td>
-                                    <td>
-                                        <button class="btn btn-danger mx-1" (click)="onDeleteCar()">Ukloni</button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+    </form>
+</div>
+<div class="container-fluid mx-auto col-sm-12 col-md-12 col-lg-10 col-xl-8 mt-5 px-0">
+    <fieldset class="border rounded p-0 m-2">
+        <legend class="text-left pl-0 ml-3">Vozila klijenta</legend>
+        <div *ngIf="cars.length > 0" class="container text-center px-1">
+            <div class="row">
+                <div *ngFor="let c of cars" class="col-sm-12 col-md-6 col-lg-4">
+                    <div class="card mx-2 my-4 shadow">
+                        <div class="card-header text-dark bg-warning font-weight-bolder">{{c.maker}} {{c.model}}</div>
+                        <div class="card-body text-secondary bg-light text-justify">
+                            <div class="row">
+                                <div class="col-sm-6 pb-3">
+                                    <p class="card-text border border-secondary rounded font-weight-bold p-2">Godiste: {{c.manufactYear | date}}</p>
+                                </div>
+                                <div class="col-sm-6 pb-3">
+                                    <p class="card-text border border-secondary rounded font-weight-bold p-2">Registracija: {{c.regNumber}}</p>
+                                </div>
+                            </div>
+                            
+                            <p class="card-text border border-secondary rounded font-weight-bold p-2">Broj motora: {{c.engineNumber}}</p>
+                            <p class="card-text border border-secondary rounded font-weight-bold p-2">Broj sasije: {{c.chasNumber}}</p>
+                            
+                            <p class="card-text border border-secondary rounded font-weight-bold p-2">Opis: {{c.description}}</p>
+                            <p class="card-text text-right rounded font-weight-bold p-2"></p>
+                            <div class="container text-center p-0 m-0">
+                                <a class="btn btn-primary mx-1">Izmeni</a>
+                                <a class="btn btn-danger mx-1">Ukloni</a>
+                            </div>
+                        </div>
                     </div>
-                </fieldset>
+                </div>
             </div>
         </div>
     </fieldset>
+</div>
+<div class="container-fluid mx-auto col-sm-12 col-md-12 col-lg-10 col-xl-8 mt-5 px-0">
+    <div class="row">
+        <div class="col-sm-12 text-center mt-4">
+            <fieldset class="border rounded p-0 m-2">
+                <legend class="text-left pl-0 ml-3">Intervencije</legend>
+                <select class="container-fluid rounded bg-warning mx-2 mt-1 mb-4 p-2 text-dark font-weight-bold"
+                    (change)="getInterventionsByCarId($event.target.value)" style="width: 350px;">
+                    <option></option>
+                    <option *ngFor="let car of cars" class="bg-warning text-dark font-weight-bold" value="{{car._id}}">{{car.maker}} {{car.model}} {{car.regNumber}}</option>
+                </select>
+                <div *ngIf="interventions.length > 0" class="container text-center px-1">
+                    <div class="row">
+                        <div *ngFor="let i of interventions" class="col-sm-12 col-md-6 col-lg-4">
+                            <div class="card mx-2 my-4 shadow">
+                                <div class="card-header text-dark bg-warning font-weight-bolder">{{i.intervention}}</div>
+                                <div class="card-body text-secondary bg-light text-justify">
+                                    <p class="card-text border border-secondary rounded font-weight-bold p-2">Datum: {{i.createdAt | date}}</p>
+                                    <p class="card-text border border-secondary rounded font-weight-bold p-2">Opis: {{i.description}}</p>
+                                    <p class="card-text text-right rounded font-weight-bold p-2">Cena: {{i.price}}</p>
+                                    <div class="container text-center p-0 m-0">
+                                        <a class="btn btn-primary mx-1">Izmeni</a>
+                                        <a class="btn btn-danger mx-1">Ukloni</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+    </div>
 </div>
