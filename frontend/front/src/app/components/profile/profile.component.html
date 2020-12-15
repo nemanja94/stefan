@@ -1,4 +1,4 @@
-<div class="container-fluid mx-auto col-sm-12 col-md-12 col-lg-10 col-xl-8 mt-5 px-0">
+<div class="container-fluid mx-auto col-sm-12 col-md-12 col-lg-10 col-xl-11 mt-5 px-0">
     <form [formGroup]="updateFormClient" (submit)="onUpdateClient()" class="form-group pb-3">
         <fieldset class="border rounded p-3 m-2">
             <legend class="text-left">Azuriraj klijenta</legend>
@@ -22,12 +22,12 @@
         </fieldset>
     </form>
 </div>
-<div class="container-fluid mx-auto col-sm-12 col-md-12 col-lg-10 col-xl-8 mt-5 px-0">
-    <fieldset class="border rounded p-0 m-2">
-        <legend class="text-left pl-0 ml-3">Vozila klijenta</legend>
+<div class="container-fluid mx-auto col-sm-12 col-md-12 col-lg-10 col-xl-11 mt-5 px-0">
+    <fieldset class="border rounded p-3 m-2">
+        <legend class="text-left">Vozila klijenta</legend>
         <div *ngIf="cars.length > 0" class="container text-center px-1">
             <div class="row">
-                <div *ngFor="let c of cars" class="col-sm-12 col-md-6 col-lg-4">
+                <div *ngFor="let c of cars" class="col-sm-12 col-md-6 col-lg-6 col-xl-4 col-xxl-3">
                     <div class="card mx-2 my-4 shadow">
                         <div class="card-header text-dark bg-warning font-weight-bolder">{{c.maker}} {{c.model}}</div>
                         <div class="card-body text-secondary bg-light text-justify">
@@ -56,19 +56,19 @@
         </div>
     </fieldset>
 </div>
-<div class="container-fluid mx-auto col-sm-12 col-md-12 col-lg-10 col-xl-8 mt-5 px-0">
+<div class="container-fluid mx-auto col-sm-12 col-md-12 col-lg-10 col-xl-11 mt-5 px-0">
     <div class="row">
         <div class="col-sm-12 text-center mt-4">
-            <fieldset class="border rounded p-0 m-2">
-                <legend class="text-left pl-0 ml-3">Intervencije</legend>
+            <fieldset class="border rounded p-3 m-2">
+                <legend class="text-left">Intervencije</legend>
                 <select class="container-fluid rounded bg-warning mx-2 mt-1 mb-4 p-2 text-dark font-weight-bold"
-                    (change)="getInterventionsByCarId($event.target.value)" style="width: 350px;">
+                    (change)="getInterventionsByCarId($event.target.value)" style="width: 295px;">
                     <option></option>
                     <option *ngFor="let car of cars" class="bg-warning text-dark font-weight-bold" value="{{car._id}}">{{car.maker}} {{car.model}} {{car.regNumber}}</option>
                 </select>
                 <div *ngIf="interventions.length > 0" class="container text-center px-1">
                     <div class="row">
-                        <div *ngFor="let i of interventions" class="col-sm-12 col-md-6 col-lg-4">
+                        <div *ngFor="let i of interventions" class="col-sm-12 col-md-6 col-lg-6 col-xl-4 col-xxl-3">
                             <div class="card mx-2 my-4 shadow">
                                 <div class="card-header text-dark bg-warning font-weight-bolder">{{i.intervention}}</div>
                                 <div class="card-body text-secondary bg-light text-justify">

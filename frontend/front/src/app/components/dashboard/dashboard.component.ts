@@ -14,6 +14,7 @@ export class DashboardComponent implements OnInit {
 
   clients: Client[] = [];
   id: string;
+  uslov = false;
 
   addFormClient: FormGroup;
 
@@ -30,6 +31,12 @@ export class DashboardComponent implements OnInit {
 
   findClientsByName(firstname: HTMLInputElement): any {
     this.userService.getClientsByName(firstname).subscribe(res => {
+      if (res.length <= 0) {
+        this.uslov = true;
+      } else if (res.length > 0) {
+        this.uslov = false;
+      }
+
       this.clients = res;
     });
   }
@@ -37,4 +44,6 @@ export class DashboardComponent implements OnInit {
   editClient(id): void {
     this.router.navigate(['profile', id]);
   }
+
+  onAddClient(){}
 }

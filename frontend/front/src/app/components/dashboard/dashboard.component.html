@@ -1,117 +1,69 @@
-<div class="container mt-5 pt-5">
-    <div class="row mx-auto px-0">
-        <div class="col-sm-12 p-3">
-            <div class="card shadow">
-                <div class="card-body">
-                    <h5 class="card-title">Pretrazi klijente</h5>
-                    <form class="form-inline">
-                        <div class="row">
-                            <div class="col-sm-4">
-                                <input #firstname class="form-control m-2" type="search" placeholder="Ime klijenta"
-                                    aria-label="Search">
-                            </div>
-                            <!-- <div class="col-sm-4">
-                                <input class="form-control m-2 shadow" type="search" placeholder="Intervencija"
-                                    aria-label="Search">
-                            </div>
-                            <div class="col-sm-4">
-                                <input class="form-control m-2 shadow" type="date" placeholder="Datum intervencije"
-                                    aria-label="Search">
-                            </div> -->
-                        </div>
-                        <button class="btn btn-warning my-2 my-sm-0" type="submit"
-                            (click)="findClientsByName(firstname.value)">Pretrazi</button>
-                    </form>
-                    <div class="container rounded m-0 mx-auto">
-                        <table *ngIf="clients.length > 0" class="table table-striped mt-5 shadow rounded table-hover text-dark text-center">
-                            <thead class="bg-warning text-dark">
-                                <tr>
-                                    <th scope="col">Ime</th>
-                                    <th scope="col">Prezime</th>
-                                    <th scope="col">Broj licne karte</th>
-                                    <th scope="col">Opcije</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr *ngFor="let client of clients">
-                                    <td>{{client.firstName}}</td>
-                                    <td>{{client.lastName}}</td>
-                                    <td>{{client.idNumber}}</td>
-                                    <td><button class="btn btn-success mx-2"
-                                            (click)="editClient(client._id)">Profile</button></td>
-                                </tr>
-                            </tbody>
-                        </table>
+<div class="ccontainer-fluid mx-auto col-sm-12 col-md-12 col-lg-10 col-xl-11 mt-5 px-0">
+    <fieldset class="border rounded p-3 m-2">
+        <legend class="text-left">Azuriraj klijenta</legend>
+        <form>
+            <div class="row">
+                <div class="form-row">
+                    <div class="col">
+                        <input #firstname class="form-control m-2" type="search" placeholder="Ime klijenta"
+                        aria-label="Search">
+                    </div>
+                    <div class="col">
+                        <button class="btn btn-warning my-2 mx-3 px-4" type="submit"
+                        (click)="findClientsByName(firstname.value)">Pretrazi</button>
                     </div>
                 </div>
             </div>
-        </div>
-        <!-- <div class="col-sm-6 p-0 mx-auto">
-            <div class="container px-0">
-                <form [formGroup]="addFormClient" (submit)="onAddClient()" class="form-group">
-                    <fieldset class="border rounded p-4 m-4">
-                        <legend class="text-center">Dodaj klijenta</legend>
-                        <div class="form-group">
-                            <label for="firstName">Ime</label>
-                            <input type="text" class="form-control" id="firstName" formControlName="firstName"
-                                placeholder="{{client.firstName}}">
-                        </div>
-                        <div class="form-group">
-                            <label for="lastName">Prezime</label>
-                            <input type="text" class="form-control" id="lastName" formControlName="lastName"
-                                placeholder="{{client.lastName}}">
-                        </div>
-                        <div class="form-group">
-                            <label for="idNumber">Broj licne karte</label>
-                            <input type="text" class="form-control" id="idNumber" formControlName="idNumber"
-                                placeholder="{{client.idNumber}}">
-                        </div>
-                        <input class="btn btn-success" type="submit" value="Dodaj">
-                    </fieldset>
-                </form>
+        </form>
+        <div class="container rounded m-0 mx-auto">
+            <table *ngIf="clients.length > 0" class="table table-striped mt-5 shadow rounded table-hover text-dark text-center">
+                <thead class="bg-warning text-dark">
+                    <tr>
+                        <th scope="col">Ime</th>
+                        <th scope="col">Prezime</th>
+                        <th scope="col">Broj licne karte</th>
+                        <th scope="col">Opcije</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let client of clients" class="text-center text-dark">
+                        <td class="py-3">{{client.firstName}}</td>
+                        <td class="py-3">{{client.lastName}}</td>
+                        <td class="py-3">{{client.idNumber}}</td>
+                        <td>
+                            <button class="btn btn-primary mx-2"
+                            (click)="editClient(client._id)">Profile</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div *ngIf="uslov" class="contaienr bg-warning p-5 m-5 shadow rounded">
+                <h3 class="text-dark">Nije pronadjen korisnik</h3>
             </div>
         </div>
-        <div class="col-sm-6 p-0 mx-auto">
-            <div class="container px-0">
-                <form [formGroup]="updateFormClient" (submit)="onUpdateClient()" class="form-group">
-                    <fieldset class="border rounded p-4 m-4">
-                        <legend class="text-center">Dodaj klijenta</legend>
-                        <div class="form-group">
-                            <label for="firstName">Ime</label>
-                            <input type="text" class="form-control" id="firstName" formControlName="firstName"
-                                placeholder="{{client.firstName}}">
-                        </div>
-                        <div class="form-group">
-                            <label for="lastName">Prezime</label>
-                            <input type="text" class="form-control" id="lastName" formControlName="lastName"
-                                placeholder="{{client.lastName}}">
-                        </div>
-                        <div class="form-group">
-                            <label for="idNumber">Broj licne karte</label>
-                            <input type="text" class="form-control" id="idNumber" formControlName="idNumber"
-                                placeholder="{{client.idNumber}}">
-                        </div>
-                        <input class="btn btn-success" type="submit" value="Dodaj">
-                    </fieldset>
-                </form>
-            </div>
-        </div> -->
-        <!-- <div class="col-sm-12 p-3">
-            <div class="card shadow">
-                <div class="card-body">
-                    <h5 class="card-title">Dodaj intervenciju</h5>
-                    <p class="card-text">Ova komponenta sluzi za kreiranje nove intervencija na vozilu.</p>
+    </fieldset>
+</div>
+<div class="ccontainer-fluid mx-auto col-sm-12 col-md-12 col-lg-10 col-xl-11 mt-5 px-0">
+    <fieldset class="border rounded p-3 m-2">
+        <legend class="text-left">Dodaj klijenta</legend>
+        <form [formGroup]="addFormClient" (submit)="onAddClient()" class="form-group pb-3">
+            <div class="form-row">
+                <div class="col">
+                    <label for="firstName">Ime</label>
+                    <input type="text" class="form-control" id="firstName" formControlName="firstName">
+                </div>
+                <div class="col">
+                    <label for="lastName">Prezime</label>
+                    <input type="text" class="form-control" id="lastName" formControlName="lastName">
+                </div>
+                <div class="col">
+                    <label for="idNumber">Br licne karte</label>
+                    <input type="text" class="form-control" id="idNumber" formControlName="idNumber">
                 </div>
             </div>
-        </div> -->
-
-        <div class="col-sm-6 p-2">
-            <!-- <div class="card shadow">
-                <div class="card-body">
-                    <h5 class="card-title">Dodaj vozilo</h5>
-                    <p class="card-text">Ova komponenta sluzi za dodavanje novog vozila.</p>
-                </div>
-            </div> -->
-        </div>
-    </div>
+            <div class="text-right p-0">
+                <input class="btn btn-success mt-3" type="submit" value="Azuriraj">
+            </div>
+        </form>
+    </fieldset>
 </div>

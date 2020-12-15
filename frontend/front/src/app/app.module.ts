@@ -13,6 +13,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { PopupCarUpdateComponent } from './components/popup-car-update/popup-car-update.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
     ProfileComponent,
     NavbarComponent,
     DashboardComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    PopupCarUpdateComponent
   ],
   imports: [
     BrowserModule,
