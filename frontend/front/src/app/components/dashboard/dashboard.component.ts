@@ -45,5 +45,7 @@ export class DashboardComponent implements OnInit {
     this.router.navigate(['profile', id]);
   }
 
-  onAddClient(){}
+  onAddClient(){
+    this.userService.addClient(this.addFormClient.getRawValue()).subscribe(res => console.log("Klijent dodat"));
+  }
 }

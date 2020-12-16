@@ -33,4 +33,12 @@ export class UserService {
       idNumber: user.idNumber
     });
   }
+
+  addClient(client): Observable<any> {
+    return this.http.post(`${this.url}/addOne`, {
+      firstName: client.firstName,
+      lastName: client.lastName,
+      idNumber: client.idNumber
+    });
+  }
 }
