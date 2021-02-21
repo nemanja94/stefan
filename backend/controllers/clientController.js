@@ -12,7 +12,7 @@ exports.getAll = async (req, res) => {
             }
 
             if (result) {
-                return res.status(200).json(result)
+                return res.status(200).json({users: result})
             } else {
                 return res.status(400).json({ msg: "Clients not found" })
             }
