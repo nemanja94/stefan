@@ -1,0 +1,14 @@
+<form [formGroup]="loginForm" (submit)="onLoginSubmit()">
+    <fieldset>
+        <legend class="pb-4">Prijavi se</legend>
+        <div class="form-group">
+            <label for="email">Email adresa</label>
+            <input type="email" class="form-control" formControlName="email">
+        </div>
+        <div class="form-group">
+            <label for="password">Lozinka</label>
+            <input type="password" class="form-control" formControlName="password">
+        </div>
+        <button type="submit" class="btn btn-primary">Prijavi se</button>
+    </fieldset>
+</form>
